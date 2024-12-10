@@ -76,7 +76,7 @@ export default function Vendor() {
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">{vendor.products} products</span>
                   <Link
-                    to={`/shop/${vendor.id}`}
+                    to={`/vendor/${vendor.id}`}
                     className="inline-flex items-center text-purple-600 hover:text-purple-800 transition-colors duration-200"
                   >
                     Visit Shop
@@ -92,7 +92,7 @@ export default function Vendor() {
                   exit={{ opacity: 0 }}
                 >
                   <Link
-                    to={`/shop/${vendor.id}`}
+                    to={`/vendor/${vendor.id}`}
                     className="bg-white text-purple-600 font-semibold py-2 px-6 rounded-full hover:bg-gray-100 transition-colors duration-200"
                   >
                     View All Products

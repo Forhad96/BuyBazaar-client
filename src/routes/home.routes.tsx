@@ -4,10 +4,11 @@ import ContactUs from "../pages/ContactUs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
-import Service from "../pages/Service";
 import SignUp from "../pages/SignUp";
 import ProductDetails from "@/pages/ProductDetails";
 import Vendor from "@/pages/Vendor";
+import VendorDetails from "@/pages/VendorDetails";
+import FlashSale from "@/pages/FlashSale";
 
 export const homePaths = [
   {
@@ -60,13 +61,13 @@ export const homePaths = [
     element: <Vendor />,
     children: [
       {
-        path: "/product/:id",
-        element: <ProductDetails />,
+        path: "/vendor/:id",
+        element: <VendorDetails />,
       },
     ],
   },
   {
-    path: "/service",
-    element: <Service />,
+    path: "/flash-sales",
+    element: <FlashSale/>,
   },
 ];
