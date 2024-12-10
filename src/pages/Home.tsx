@@ -5,6 +5,9 @@ import FlashSaleSection from "../components/FlashSale/FlashSaleSection";
 import CategoriesSection from "../components/category/CategoriesSection";
 import FeaturedProducts from "../components/featuredProducts/featuredProducts";
 import ProductListing from "@/components/featuredProducts/ProductListing";
+import RelatedProduct from "@/components/product/RelatedProduct";
+import LiveChat from "@/components/product/LiveChat";
+import SpecialOffer from "@/components/product/SpecialOffer";
 
 const Home = () => {
   return (
@@ -12,7 +15,11 @@ const Home = () => {
       <Banner />
       <FlashSaleSection/>
       <CategoriesSection/>
-      {/* <FeaturedProducts/> */}
+      <SpecialOffer/>
+      <RelatedProduct/>
+      <LiveChat/>
+
+      <FeaturedProducts/>
       <ProductListing/>
       <FAQSection />
 
