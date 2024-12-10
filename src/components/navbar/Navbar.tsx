@@ -10,7 +10,7 @@ import { useTheme } from '../../context/ThemeContext'
 const navItems = [
   { 
     name: 'Shop', 
-    href: '/shop',
+    href: '/vendors',
     megaMenu: [
       {
         title: 'Categories',

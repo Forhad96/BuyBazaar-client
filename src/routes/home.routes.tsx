@@ -1,4 +1,3 @@
-
 import Product from "@/pages/Product";
 import About from "../pages/About";
 import ContactUs from "../pages/ContactUs";
@@ -8,6 +7,7 @@ import RegisterPage from "../pages/Register";
 import Service from "../pages/Service";
 import SignUp from "../pages/SignUp";
 import ProductDetails from "@/pages/ProductDetails";
+import Vendor from "@/pages/Vendor";
 
 export const homePaths = [
   {
@@ -49,11 +49,21 @@ export const homePaths = [
     path: "/product",
     element: <Product />,
     children: [
-{
-  path: "/product/:id",
-  element: <ProductDetails />
-}
-    ]
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
+      },
+    ],
+  },
+  {
+    path: "/vendors",
+    element: <Vendor />,
+    children: [
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
+      },
+    ],
   },
   {
     path: "/service",
