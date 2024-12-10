@@ -9,6 +9,7 @@ import ProductDetails from "@/pages/ProductDetails";
 import Vendor from "@/pages/Vendor";
 import VendorDetails from "@/pages/VendorDetails";
 import FlashSale from "@/pages/FlashSale";
+import Cart from "@/pages/Cart";
 
 export const homePaths = [
   {
@@ -69,5 +70,9 @@ export const homePaths = [
   {
     path: "/flash-sales",
     element: <FlashSale/>,
+  },
+  {
+    path: "/cart",
+    element: <Cart/>,
   },
 ];
