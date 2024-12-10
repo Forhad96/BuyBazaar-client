@@ -1,4 +1,5 @@
 
+import Product from "@/pages/Product";
 import About from "../pages/About";
 import ContactUs from "../pages/ContactUs";
 import Home from "../pages/Home";
@@ -42,6 +43,10 @@ export const homePaths = [
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/product",
+    element: <Product />,
   },
   {
     path: "/service",

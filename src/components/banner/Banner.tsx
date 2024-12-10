@@ -9,7 +9,7 @@ export default function Banner() {
         <p className="text-xl md:text-2xl mb-8 animate-fade-in-up animation-delay-300">Discover amazing products with vibrant style</p>
         <Link
           to="/shop"
-          className="inline-block bg-white text-purple-600 font-semibold py-3 px-8 rounded-full hover:bg-opacity-80 transition-all duration-300 animate-fade-in-up animation-delay-600"
+           className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-8 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
         >
           Shop Now
         </Link>
