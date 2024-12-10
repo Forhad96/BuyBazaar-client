@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import Service from "../pages/Service";
 import SignUp from "../pages/SignUp";
+import ProductDetails from "@/pages/ProductDetails";
 
 export const homePaths = [
   {
@@ -47,6 +48,12 @@ export const homePaths = [
   {
     path: "/product",
     element: <Product />,
+    children: [
+{
+  path: "/product/:id",
+  element: <ProductDetails />
+}
+    ]
   },
   {
     path: "/service",

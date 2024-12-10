@@ -7,7 +7,7 @@ const BreadcrumbBanner: FC = () => {
   const { pathname } = useLocation();
   const pathSegments = pathname.split("/").filter(Boolean);
   const carId = pathSegments[1]; // Assuming the ID is the second segment
-console.log(pathname);
+
   const { data: carData, isError, isLoading } = useGetSingleCarsQuery(carId);
   // Generate breadcrumbs, always starting with "Home"
   // console.log(carData);
