@@ -3,6 +3,7 @@ import About from "../pages/About";
 import ContactUs from "../pages/ContactUs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import RegisterPage from "../pages/Register";
 import Service from "../pages/Service";
 import SignUp from "../pages/SignUp";
 
@@ -37,6 +38,10 @@ export const homePaths = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
     path: "/service",
