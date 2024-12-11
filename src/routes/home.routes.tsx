@@ -11,6 +11,7 @@ import VendorDetails from "@/pages/VendorDetails";
 import FlashSale from "@/pages/FlashSale";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
+import Categories from "@/pages/Categories";
 
 export const homePaths = [
   {
@@ -59,6 +60,10 @@ export const homePaths = [
     ],
   },
   {
+    path: "/categories",
+    element: <Categories />,
+  },
+  {
     path: "/vendors",
     element: <Vendor />,
     children: [
@@ -70,14 +75,14 @@ export const homePaths = [
   },
   {
     path: "/flash-sales",
-    element: <FlashSale/>,
+    element: <FlashSale />,
   },
   {
     path: "/cart",
-    element: <Cart/>,
+    element: <Cart />,
   },
   {
     path: "/checkout",
-    element: <Checkout/>,
+    element: <Checkout />,
   },
 ];

@@ -10,7 +10,7 @@ const App: FC = () => {
   return (
     <div>
       <Navbar />
-      {!pathsToIgnore.includes(location.pathname) && <BreadcrumbBanner />}
+      {/* {!pathsToIgnore.includes(location.pathname) && <BreadcrumbBanner />} */}
 
       <Outlet />
 
