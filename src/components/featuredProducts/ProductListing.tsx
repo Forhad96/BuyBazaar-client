@@ -1,5 +1,6 @@
 
 
+import generateImageUrl from '@/utils/generateImageUrl'
 import { useState, useEffect } from 'react'
 
 
@@ -49,7 +50,7 @@ export default function ProductListing() {
             >
               <div className="relative h-64">
                 <img
-                  src={"https://images.pexels.com/photos/6889217/pexels-photo-6889217.jpeg"}
+                  src={generateImageUrl()}
                   alt={product.name}
                   className=" w-full h-full object-cover transition-transform duration-300 transform hover:scale-110"
                 />

@@ -1,5 +1,5 @@
 interface SectionHeaderProps {
-  subtitle: string;
+  subtitle?: string;
   title: string;
   alignment?: "left" | "center" | "right"; // Optional alignment property
   size?: "small" | "medium" | "large"; // Optional size property
@@ -43,12 +43,12 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     >
       {/* Subtitle */}
       <p className={`text-primary ${currentSize.subtitle} font-medium mb-2`}>
-        <span className="text-primaryHover">*</span> {subtitle}
+        <span className="text-primaryHover"></span> {subtitle}
       </p>
 
       {/* Title */}
       <h2
-        className={`${currentSize.title} font-bold text-light-text`}
+        className={`${currentSize.title} bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text`}
         dangerouslySetInnerHTML={{ __html: title }}
       />
     </div>

@@ -37,8 +37,8 @@ export default function SearchBar() {
         placeholder="Search products..."
         className="w-full px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-purple-600"
       />
-      <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2">
-        <Search className="w-5 h-5 text-gray-400" />
+      <button type="submit" className="absolute right-0 top-1/2 flex items-center justify-center bg-gradient-purple-to-pink h-full w-12 hover:opacity-80 rounded-r-full transform -translate-y-1/2">
+        <Search className="w-5 h-5 text-white" />
       </button>
       {suggestions.length > 0 && (
         <ul className="absolute z-10 w-full bg-white mt-1 rounded-md shadow-lg max-h-60 overflow-auto">

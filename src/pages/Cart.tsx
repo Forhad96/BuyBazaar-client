@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import generateImageUrl from '@/utils/generateImageUrl'
+import SectionHeader from '@/components/Shared/SectionHeader'
 
 // add demo cart item array
 const cartItems = [
@@ -20,25 +21,15 @@ const cartItems = [
 ]
 
 export default function Cart() {
-    const [cart, setCart] = useState([    {
-        id: 1,
-        name: 'Product 1',
-        price: 19.99,
-        quantity: 2,
-    },
-    {
-        id: 2,
-        name: 'Product 2',
-        price: 24.99,
-        quantity: 1,
-    },])
+    const [cart, setCart] = useState([  ...cartItems ]);
   if (cart.length === 0) {
     return (
 
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
-          <p>Your cart is empty. <Link to="/" className="text-blue-600 hover:underline">Continue shopping</Link></p>
-        </div>
+      <div className="container mx-auto px-4 py-8">
+      {/* <SectionTitle>Your Cart</SectionTitle> */}
+      <SectionHeader title='Your Cart'/>
+      <p className="text-center">Your cart is empty. <Link to="/" className="text-purple-600 hover:underline">Continue shopping</Link></p>
+    </div>
     )
   }
 
@@ -99,7 +90,7 @@ export default function Cart() {
             <button
             //   onClick={handleCheckout}
             //   disabled={checkoutStatus !== 'idle'}
-              className="w-full mt-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-2 px-4 rounded-full hover:opacity-90 transition-all duration-300 disabled:opacity-50"
+              className="w-full mt-4 bg-gradient-purple-to-pink text-white font-semibold py-2 px-4 rounded-full hover:opacity-90 transition-all duration-300 disabled:opacity-50"
             >
                 Proceed to Checkout
               {/* {checkoutStatus === 'idle' && 'Proceed to Checkout'}

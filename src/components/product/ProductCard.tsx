@@ -51,7 +51,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="flex justify-between items-center mt-4">
           <button
             // onClick={handleAddToCart}
-            className="bg-primary text-primary-foreground font-semibold py-2 px-4 rounded-full hover:opacity-90 transition-all duration-300"
+            className="bg-gradient-purple-to-pink text-primary-foreground font-semibold py-2 px-4 rounded-full hover:opacity-90 transition-all duration-300"
           >
             Add to Cart
           </button>

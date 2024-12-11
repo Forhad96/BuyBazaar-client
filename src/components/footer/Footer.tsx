@@ -54,7 +54,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-r-md hover:bg-primary/90 transition-colors duration-300"
+                className="bg-gradient-purple-to-pink text-primary-foreground px-4 py-2 rounded-r-md hover:bg-primary/90 transition-colors duration-300"
               >
                 Subscribe
               </button>

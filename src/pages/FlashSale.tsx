@@ -31,7 +31,7 @@ export default function FlashSale() {
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Flash Sale</h1>
         <div className="text-center mb-8">
-          <div className="text-4xl font-bold text-purple-600 animate-pulse">
+          <div className="text-4xl font-bold text-purple-600  animate-pulse">
             Ends in: {formatTime(timeLeft)}
           </div>
         </div>

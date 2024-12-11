@@ -1,8 +1,9 @@
+import generateImageUrl from "@/utils/generateImageUrl"
 import { Link } from "react-router-dom"
 
 const specialOffers = [
-  { id: 1, name: 'Summer Sale', description: 'Up to 50% off on summer essentials', image: '/placeholder.svg' },
-  { id: 2, name: 'New Arrivals', description: 'Check out our latest products', image: '/placeholder.svg' },
+  { id: 1, name: 'Summer Sale', description: 'Up to 50% off on summer essentials', image: generateImageUrl() },
+  { id: 2, name: 'New Arrivals', description: 'Check out our latest products', image: generateImageUrl() },
 ]
 
 export default function SpecialOffer() {

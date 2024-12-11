@@ -32,6 +32,7 @@ const navItems = [
     ],
   },
   { name: 'Flash Sales', href: '/flash-sales' },
+  { name: 'Products', href: '/product' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ]
