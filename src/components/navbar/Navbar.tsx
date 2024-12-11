@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 
-import {  ShoppingCart, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react'
+import {  ShoppingCart, Menu, X, ChevronDown, Sun, Moon, Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import { useTheme } from '../../context/ThemeContext'
+import { useWishlist } from '@/context/WishlistContext'
 
 const navItems = [
   { 
@@ -38,10 +39,11 @@ const navItems = [
 ]
 
 export default function Header() {
+  const { wishlist } = useWishlist()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null)
   const { theme, toggleTheme } = useTheme()
-
+  const wishlistItemCount = wishlist.length
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-800 dark:to-pink-800 text-white shadow-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,6 +93,14 @@ export default function Header() {
             <div className="hidden md:block w-64">
               <SearchBar />
             </div>
+            <Link to="/wishlist" className="text-white hover:text-yellow-300 transition-colors duration-300 relative">
+              <Heart className="w-6 h-6" />
+              {wishlistItemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-yellow-300 text-purple-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                  {wishlistItemCount}
+                </span>
+              )}
+            </Link>
             <Link to="/cart" className="text-white hover:text-yellow-300 transition-colors duration-300 relative">
               <ShoppingCart className="w-6 h-6" />
               

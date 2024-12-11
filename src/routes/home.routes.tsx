@@ -12,6 +12,7 @@ import FlashSale from "@/pages/FlashSale";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Categories from "@/pages/Categories";
+import Wishlist from "@/pages/Wishlist";
 
 export const homePaths = [
   {
@@ -76,6 +77,10 @@ export const homePaths = [
   {
     path: "/flash-sales",
     element: <FlashSale />,
+  },
+  {
+    path: "/wishlist",
+    element: <Wishlist/>,
   },
   {
     path: "/cart",
