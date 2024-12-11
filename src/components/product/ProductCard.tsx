@@ -1,8 +1,9 @@
 
+// import { useCart } from '@/context/CartContext'
+import { useWishlist } from '@/context/WishlistContext'
 import { Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
-// import { useWishlist } from '../contexts/wishlist-context'
-// import { useCart } from '../contexts/cart-context'
+
 
 type Product = {
   id: number
@@ -12,25 +13,26 @@ type Product = {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-//   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
-//   const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+  // const { addToCart } = useCart()
 
-//   const handleWishlistToggle = () => {
-//     if (isInWishlist(product.id)) {
-//       removeFromWishlist(product.id)
-//     } else {
-//       addToWishlist(product)
-//     }
-//   }
+  const handleWishlistToggle = () => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id)
+    } else {
+      addToWishlist(product)
+    }
+  }
 
-//   const handleAddToCart = () => {
-//     addToCart({
-//       id: product.id,
-//       name: product.name,
-//       price: product.price,
-//       quantity: 1,
-//     })
-//   }
+  // const handleAddToCart = () => {
+  //   console.log("cart",product);
+  //   addToCart({
+  //     id: product.id,
+  //     name: product.name,
+  //     price: product.price,
+  //     quantity: 1,
+  //   })
+  // }
 
   return (
     <div className="bg-card text-card-foreground rounded-lg shadow-md overflow-hidden">
@@ -56,8 +58,8 @@ export default function ProductCard({ product }: { product: Product }) {
             Add to Cart
           </button>
           <button
-            // onClick={handleWishlistToggle}
-            // className={`p-2 rounded-full ${isInWishlist(product.id) ? 'text-destructive' : 'text-muted-foreground'}`}
+            onClick={handleWishlistToggle}
+            className={`p-2 rounded-full ${isInWishlist(product.id) ? 'text-destructive' : 'text-muted-foreground'}`}
           >
             <Heart className="w-6 h-6" />
           </button>

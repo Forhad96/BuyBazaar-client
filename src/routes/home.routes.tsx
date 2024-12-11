@@ -10,6 +10,7 @@ import Vendor from "@/pages/Vendor";
 import VendorDetails from "@/pages/VendorDetails";
 import FlashSale from "@/pages/FlashSale";
 import Cart from "@/pages/Cart";
+import Checkout from "@/pages/Checkout";
 
 export const homePaths = [
   {
@@ -74,5 +75,9 @@ export const homePaths = [
   {
     path: "/cart",
     element: <Cart/>,
+  },
+  {
+    path: "/checkout",
+    element: <Checkout/>,
   },
 ];

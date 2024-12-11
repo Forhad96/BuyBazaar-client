@@ -8,16 +8,22 @@ import { persistor, store } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext.tsx";
+import { CartProvider } from "./context/CartContext.tsx";
+import { WishlistProvider } from "./context/WishlistContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-        <Toaster />
-      </PersistGate>
-    </Provider>
+      <WishlistProvider>
+        <Provider store={store}>
+    <CartProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider>
+              <RouterProvider router={router} />
+            </ThemeProvider>
+            <Toaster />
+          </PersistGate>
+    </CartProvider>
+        </Provider>
+      </WishlistProvider>
   </React.StrictMode>
 );
