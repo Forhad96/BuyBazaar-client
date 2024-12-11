@@ -13,6 +13,8 @@ import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Categories from "@/pages/Categories";
 import Wishlist from "@/pages/Wishlist";
+import ReturnsPolicy from "@/pages/ReturnsPolicy";
+import ShippingPolicy from "@/pages/ShippingPolicy";
 
 export const homePaths = [
   {
@@ -89,5 +91,13 @@ export const homePaths = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "/returns-policy",
+    element: <ReturnsPolicy />,
+  },
+  {
+    path: "/shipping-policy",
+    element: <ShippingPolicy />,
   },
 ];
