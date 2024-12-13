@@ -1,10 +1,11 @@
+import { BaseQueryApi } from "@reduxjs/toolkit/query";
+
 export type TError = {
   data: {
-    error: string;
     message: string;
+    stack: string;
     success: boolean;
   };
-
   status: number;
 };
 
@@ -19,48 +20,41 @@ export type TResponse<T> = {
   data?: T;
   error?: TError;
   meta?: TMeta;
-  message: string;
   success: boolean;
+  message: string;
 };
 
-export type TQueryParams = {
+export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
+
+export type TQueryParam = {
   name: string;
   value: boolean | React.Key;
 };
-// export type TResponseRedux = TResponse & TMeta
-export type TCar = {
-  _id: string | undefined;
-  name: string;
-  description: string;
-  brand: string;
-  model: string;
-  year: number;
-  color: string;
-  isElectric: boolean;
-  carType: string;
-  door: number;
-  passengers: number;
-  transmission: string;
-  luggage: number;
-  airCondition: boolean;
-  seats: number;
-  mileage: number;
-  status: string;
-  location: string;
-  features: string[];
-  pricePerHour: number;
-  pricePerDay: number;
-  imageUrl: string[];
-  isDeleted: boolean;
-  __v: number;
-};
 
-export type TBooking = {
-  _id: string;
-  date: string; // The date of the booking in YYYY-MM-DD format
-  user: string; // Identifier for the user (reference to user model)
-  car: string; // Identifier for the booked car (reference to car model)
-  startTime: string; // The start time of the booking in 24hr format (HH:mm)
-  endTime: string; // The end time of the booking in 24hr format (HH:mm)
-  totalCost: number; // The total cost of the booking, default is 0
-};
+
+export type TUserResponseData = {
+  id: string;
+  email: string;
+  password: string;
+  needPasswordChange: boolean;
+  lastPasswordChange: Date;
+  passwordAttempts: number;
+  isLocked: boolean;
+  lockoutEnd: Date | null;
+  role: string;
+  name: string;
+  profilePicture: string | null;
+  phoneNumber: string | null;
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  country: string | null;
+  status: string;
+  suspensionReason: string | null;
+  suspendedAt: Date | null;
+  deletedAt: Date | null;
+  lastLogin: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}

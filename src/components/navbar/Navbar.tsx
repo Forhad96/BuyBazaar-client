@@ -36,6 +36,8 @@ const navItems = [
   { name: 'Products', href: '/product' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Login', href: '/login' },
+  { name: 'Register', href: '/register' },
 ]
 
 export default function Header() {

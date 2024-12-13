@@ -1,4 +1,6 @@
+import { TResponse, TUserResponseData } from "@/types";
 import { baseApi } from "../../api/baseApi";
+import { TUser } from "./authSlice";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -6,7 +8,7 @@ const authApi = baseApi.injectEndpoints({
       query: (userInfo) => {
         console.log(userInfo);
         return {
-          url: "/auth/signin",
+          url: "/auth/login",
           method: "POST",
           body: userInfo,
         };
@@ -14,13 +16,13 @@ const authApi = baseApi.injectEndpoints({
     }),
     signUp: builder.mutation({
       query: (userInfo) => {
-        console.log("userInfo");
         return {
-          url: "/auth/signup",
+          url: "/users/create-customer",
           method: "POST",
           body: userInfo,
         };
       },
+      // transformResponse: (response) => response.data,
     }),
   }),
 });

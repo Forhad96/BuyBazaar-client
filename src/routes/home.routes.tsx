@@ -15,6 +15,8 @@ import Categories from "@/pages/Categories";
 import Wishlist from "@/pages/Wishlist";
 import ReturnsPolicy from "@/pages/ReturnsPolicy";
 import ShippingPolicy from "@/pages/ShippingPolicy";
+import OrderConfirm from "@/pages/OrderConfirm";
+import PexelsImageSearch from "@/pages/PexelsImageSearch";
 
 export const homePaths = [
   {
@@ -93,11 +95,19 @@ export const homePaths = [
     element: <Checkout />,
   },
   {
+    path: "/order-confirm",
+    element: <OrderConfirm />,
+  },
+  {
     path: "/returns-policy",
     element: <ReturnsPolicy />,
   },
   {
     path: "/shipping-policy",
     element: <ShippingPolicy />,
+  },
+  {
+    path: "/pexels-image-search",
+    element: <PexelsImageSearch/>,
   },
 ];
