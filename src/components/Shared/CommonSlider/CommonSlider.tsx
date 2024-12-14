@@ -44,7 +44,7 @@ const CommonSlider: React.FC<CommonSliderProps> = ({
 
   // Generate a unique slider ID if not provided
   const uniqueId = sliderId || `slider-${Math.random().toString(36).substr(2, 9)}`;
-console.log(uniqueId);
+// console.log(uniqueId);
   // Merge custom breakpoints with default breakpoints
   const breakpoints = {
     "@0.00": {
