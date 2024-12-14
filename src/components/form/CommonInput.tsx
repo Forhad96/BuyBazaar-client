@@ -1,36 +1,69 @@
-import { Form, Input } from "antd";
-import { Controller } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-type CommonInputProps = {
-  type: string;
+interface ReusableFormFieldProps {
+  control: any;
   name: string;
   label: string;
-  placeHolder?:string;
-  disabled?: boolean;
-};
+  placeholder?: string;
+  description?: string;
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "file"
+    | "date"
+    | "datetime-local"
+    | "month"
+    | "week"
+    | "time"
+    | "range"
+    | "color"
+    | "tel"
+    | "url"
+    | "search"
+    | "hidden";
+}
 
-const CommonInput = ({ type, name, label,placeHolder, disabled }: CommonInputProps) => {
-  return (
-    <Controller
-      name={name}
-      render={({ field, fieldState: { error } }) => (
-        <Form.Item
-          label={label}
-          validateStatus={error ? "error" : ""}
-          help={error ? error.message : null}
-        >
+const ReusableFormInput: React.FC<ReusableFormFieldProps> = ({
+  control,
+  name,
+  label,
+  placeholder,
+  description,
+  type = "text",
+}) => (
+  <FormField
+    control={control}
+    name={name}
+    render={({ field }) => (
+      <FormItem>
+        <FormLabel className="block mb-2 text-sm font-medium text-gray-700">
+          {label}
+        </FormLabel>
+        <FormControl>
           <Input
             type={type}
-            id={name}
+            className="focus:border-purple-500 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+            placeholder={placeholder}
             {...field}
-            placeholder={placeHolder}
-            disabled={disabled}
-            size="large"
           />
-        </Form.Item>
-      )}
-    />
-  );
-};
+        </FormControl>
+        {description && <FormDescription>{description}</FormDescription>}
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+);
 
-export default CommonInput;
+export default ReusableFormInput;

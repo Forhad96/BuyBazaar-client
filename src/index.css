@@ -24,14 +24,6 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
-    --primary-gradient: linear-gradient(
-      90deg,
-      rgba(163, 67, 145, 1) 0%,
-      rgba(255, 82, 113, 1) 100%
-    );
-    .bgs-primary-gradient {
-      background-image: var(--primary-gradient);
-    }
     --primary: 259 94% 51%;
     --primary-foreground: 210 40% 98%;
 
@@ -103,11 +95,11 @@
     @apply border-border;
   }
 
-  .gradient-purple-to-pink {
+  /* .gradient-purple-to-pink {
     @apply bg-gradient-to-r from-purple-600 to-pink-600;
   }
   .gradient-blue-to-teal {
     @apply bg-gradient-to-r from-blue-600 to-teal-600;
-  }
+  } */
 }
 

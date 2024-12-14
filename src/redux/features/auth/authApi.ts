@@ -1,6 +1,5 @@
-import { TResponse, TUserResponseData } from "@/types";
+
 import { baseApi } from "../../api/baseApi";
-import { TUser } from "./authSlice";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,6 +23,16 @@ const authApi = baseApi.injectEndpoints({
       },
       // transformResponse: (response) => response.data,
     }),
+    register: builder.mutation({
+      query: (userInfo) => {
+        return {
+          url: "/users/create-user",
+          method: "POST",
+          body: userInfo,
+        };
+      },
+      // transformResponse: (response) => response.data,
+    }),
   }),
 });
-export const { useLoginMutation, useSignUpMutation } = authApi;
+export const { useLoginMutation, useSignUpMutation,useRegisterMutation } = authApi;

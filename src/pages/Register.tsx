@@ -1,50 +1,65 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignUpMutation } from "@/redux/features/auth/authApi";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 import { TResponse, TUserResponseData } from "@/types";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-// Define the schema for your form data
-// Define the schema for your form data
-// Define the schema for your form data
-const registerSchema = z
-  .object({
-    name: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z
-      .string()
-      .min(8, "Confirm password must be at least 8 characters"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"], // This will point the error to the confirmPassword field
-  });
+import { registerSchema } from "@/schemas";
+import { z } from "zod";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import { Button } from "@/components/ui/button";
+import ReusableFormInput from "@/components/form/CommonInput";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
 
 export default function RegisterPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(registerSchema) });
-  const [signup] = useSignUpMutation();
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "Forhad hossain",
+      email: "forhad@gmail.com",
+      password: "12345678",
+      confirmPassword: "12345678",
+      shopName: "Shop Name",
+    },
+  });
+  const [register] = useRegisterMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isVendor, setIsVendor] = useState(false);
   const navigate = useNavigate();
-
-  // Define the schema for your form data
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  async function onSubmit(data: z.infer<typeof registerSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    // console.log(data);
     const toastId = toast.loading("loading...");
+    const { profilePicture, shopLogo, ...rest } = data;
     const formData = new FormData();
-
-    formData.append("data", JSON.stringify(data));
-    formData.append("file", data.image);
+    if (profilePicture) {
+      formData.append("profilePicture", profilePicture);
+    }
+    if (shopLogo) {
+      formData.append("shopLogo", shopLogo);
+    }
+    formData.append("data", JSON.stringify(rest));
+    // console.log("Form Data: ", Object.fromEntries(formData));
+    // console.log(formData.get("shopLogo"));
     try {
-      const res = (await signup(formData)) as TResponse<TUserResponseData>;
+      const res = (await register(formData)) as TResponse<TUserResponseData>;
 
       if (res.error?.data.success === false) {
         toast.error(res.error?.data.message, { id: toastId, duration: 2000 });
@@ -53,71 +68,41 @@ export default function RegisterPage() {
           id: toastId,
           duration: 2000,
         });
-        navigate("/login");
+        // navigate("/login");
       }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId });
       console.log(error);
     }
-  };
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Register</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              {...register("name", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <ReusableFormInput
+              control={form.control}
+              name="name"
+              label="Name"
             />
-            {errors.name && typeof errors.name.message === "string" && (
-              <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              {...register("email", { required: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+            <ReusableFormInput
+              control={form.control}
+              name="email"
+              label="Email"
             />
-            {errors.email && typeof errors.email.message === "string" && (
-              <p className="mt-2 text-sm text-red-600">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
+
             <div className="relative">
-              <input
+              <ReusableFormInput
+                control={form.control}
+                name="password"
+                label="Password"
                 type={showPassword ? "text" : "password"}
-                id="password"
-                {...register("password", { required: true })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                className="absolute inset-y-12 right-0 pr-3 flex items-center"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -127,29 +112,17 @@ export default function RegisterPage() {
                 )}
               </button>
             </div>
-            {errors.password && typeof errors.password.message === "string" && (
-              <p className="mt-2 text-sm text-red-600">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="confirmPassword"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Confirm Password
-            </label>
             <div className="relative">
-              <input
+              <ReusableFormInput
+                control={form.control}
+                name="confirmPassword"
+                label="Confirm Password"
                 type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                {...register("confirmPassword", { required: true })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               />
+
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                className="absolute inset-y-12 right-0 pr-3 flex items-center"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? (
@@ -159,20 +132,64 @@ export default function RegisterPage() {
                 )}
               </button>
             </div>
-            {errors.confirmPassword &&
-              typeof errors.confirmPassword.message === "string" && (
-                <p className="mt-2 text-sm text-red-600">
-                  {errors.confirmPassword.message}
-                </p>
+
+            {isVendor && (
+              <>
+                <ReusableFormInput
+                  control={form.control}
+                  name="shopName"
+                  label="Shop Name"
+                />
+                <ReusableFormInput
+                  control={form.control}
+                  name="description"
+                  label="Description (optional)"
+                />
+                {/* <ReusableFormInput
+                  control={form.control}
+                  name="shopLogo"
+                  label="Shop Image (optional)"
+                  type={"file"}
+                /> */}
+              </>
+            )}
+            {/* <FormField
+              control={form.control}
+              name="profilePicture"
+              render={({ field:{onChange,value,...field} }) => (
+                <FormItem>
+                  <FormLabel>Profile Picture</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Profile Picture" type="file" value={value?.fileName} {...field} onChange={(e) => onChange(e.target.files?.[0])} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
               )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
-          >
-            Register
-          </button>
-        </form>
+            /> */}
+{/* 
+            <ReusableFormInput
+              control={form.control}
+              name="profilePicture"
+              label=" Profile Picture (optional)"
+              type={"file"}
+            /> */}
+            <div className="flex items-center space-x-2">
+              <Switch
+                checked={isVendor}
+                onClick={() => setIsVendor(!isVendor)}
+                id="vendor-mode"
+              />
+              <Label htmlFor="vendor-mode">Register as a vendor</Label>
+            </div>
+            <Button type="submit" className="w-full">
+              Register
+            </Button>
+          </form>
+        </Form>
+
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link to="/login" className="text-purple-600 hover:underline">
