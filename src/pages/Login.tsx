@@ -1,134 +1,95 @@
-// import { Button, Row } from "antd";
-// import { FieldValues } from "react-hook-form";
-// import { useDispatch } from "react-redux";
-// import { setUser, TUser } from "../redux/features/auth/authSlice";
-// import { verifyToken } from "../utils/verifyToken";
-// import { useLoginMutation } from "../redux/features/auth/authApi";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "sonner";
-// import CommonForm from "../components/form/CommonForm";
-// import CommonInput from "../components/form/CommonInput";
 
-// const Login = () => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const [login] = useLoginMutation();
-//   const onSubmit = async (data: FieldValues) => {
-//     const tostId = toast.loading("logging in...");
-//     try {
-//       const userInfo = {
-//         email: data.email,
-//         password: data.password,
-//       };
-//       const res = await login(userInfo).unwrap();
-//       console.log(res);
-//       const user = verifyToken(res.data.accessToken) as TUser;
-//       console.log(user);
-//       dispatch(setUser({ user, token: res.data.accessToken }));
-//       toast.success("Login successful", { id: tostId, duration: 2000 });
-//       navigate(`/${user.role}/dashboard`);
-//     } catch (error) {
-//       toast.error("something went wrong.", { id: tostId, duration: 2000 });
-//     }
-//   };
-
-//   const defaultValues = {
-//     // email: "forhad@gmail.com",
-//     // password: "admin123",
-//   };
-//   return (
-//     <Row justify="center" align="middle" style={{ marginTop:"80px"}}>
-//       <CommonForm onSubmit={onSubmit} defaultValues={defaultValues}>
-//         <CommonInput type="text" name="email" label="Email" />
-//         <CommonInput type="text" name="password" label="Password" />
-//         <Row justify="space-between" style={{ gap: 20 }}>
-//           <Button htmlType="submit">Login</Button>
-//         </Row>
-//       </CommonForm>
-//     </Row>
-//   );
-// };
-
-// export default Login;
-
-
-
-
-
-"use client"
 
 import { useState } from 'react'
 
 import { Eye, EyeOff } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import ReusableFormInput from '@/components/form/ReusableFormInput'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { loginSchema } from '@/schemas'
+import { toast } from 'sonner'
+import { useLoginMutation } from '@/redux/features/auth/authApi'
+import { Form } from '@/components/ui/form'
+import { TResponse, TUserLoginResponse } from '@/types'
 
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email:"forhad@gmail.com",
+      password: "12345678",
+    },
+  });
+  const [login]= useLoginMutation()
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  async function onSubmit(data: z.infer<typeof loginSchema>) {
+    // console.log(data);
+    const toastId = toast.loading("logging in...");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real application, you would make an API call here to authenticate the user
-    console.log('Logging in with:', { email, password })
-    // Redirect to dashboard after successful login
-    navigate('/dashboard')
+    try {
+      const res = (await login(data)) as TResponse<TUserLoginResponse>;
+
+      if (res.error?.data.success === false) {
+        toast.error(res.error?.data.message, { id: toastId, duration: 2000 });
+      } else {
+        toast.success("Login successful", {
+          id: toastId,
+          duration: 2000,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Something went wrong", { id: toastId });
+      console.log(error);
+    }
   }
-
   return (
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
           <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-                required
+          <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <ReusableFormInput
+              control={form.control}
+              name="email"
+              label="Email"
+            />
+
+            <div className="relative">
+              <ReusableFormInput
+                control={form.control}
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
               />
+              <button
+                type="button"
+                className="absolute inset-y-12 right-0 pr-3 flex items-center"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
             </div>
-            <div className="mb-6">
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-                  required
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-500" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-500" />
-                  )}
-                </button>
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
-            >
+
+
+
+      
+            <Button type="submit" className="w-full">
               Login
-            </button>
+            </Button>
           </form>
+        </Form>
+
           <p className="mt-4 text-center text-sm text-gray-600">
             Don't have an account?{' '}
             <Link to="/register" className="text-purple-600 hover:underline">

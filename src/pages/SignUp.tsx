@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Checkbox, Form, Row, notification } from "antd";
 import CommonForm from "../components/form/CommonForm";
-import CommonInput from "../components/form/CommonInput";
+import CommonInput from "../components/form/ReusableFormInput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useSignUpMutation } from "../redux/features/auth/authApi";
 import Link from "antd/es/typography/Link";

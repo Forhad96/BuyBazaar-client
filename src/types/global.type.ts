@@ -32,6 +32,19 @@ export type TQueryParam = {
 };
 
 
+
+export interface TUserLoginResponse {
+  success: boolean
+  message: string
+  data: UserLoginData
+}
+
+export interface UserLoginData {
+  accessToken: string
+  needPasswordChange: boolean
+}
+
+
 export type TUserResponseData = {
   id: string;
   email: string;

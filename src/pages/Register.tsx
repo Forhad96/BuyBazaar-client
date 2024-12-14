@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,10 +22,10 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
-import ReusableFormInput from "@/components/form/CommonInput";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
+import ReusableFormInput from "@/components/form/ReusableFormInput";
 
 export default function RegisterPage() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -43,9 +44,10 @@ export default function RegisterPage() {
   const [isVendor, setIsVendor] = useState(false);
   const navigate = useNavigate();
   async function onSubmit(data: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     // console.log(data);
+    if(isVendor){
+      data.role = "VENDOR"
+    }
     const toastId = toast.loading("loading...");
     const { profilePicture, shopLogo, ...rest } = data;
     const formData = new FormData();
@@ -58,6 +60,10 @@ export default function RegisterPage() {
     formData.append("data", JSON.stringify(rest));
     // console.log("Form Data: ", Object.fromEntries(formData));
     // console.log(formData.get("shopLogo"));
+
+
+    // console.log(data);
+    // return
     try {
       const res = (await register(formData)) as TResponse<TUserResponseData>;
 
@@ -68,7 +74,7 @@ export default function RegisterPage() {
           id: toastId,
           duration: 2000,
         });
-        // navigate("/login");
+        navigate("/login");
       }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId });
@@ -169,7 +175,7 @@ export default function RegisterPage() {
                 </FormItem>
               )}
             /> */}
-{/* 
+            {/* 
             <ReusableFormInput
               control={form.control}
               name="profilePicture"

@@ -21,7 +21,6 @@ const authApi = baseApi.injectEndpoints({
           body: userInfo,
         };
       },
-      // transformResponse: (response) => response.data,
     }),
     register: builder.mutation({
       query: (userInfo) => {

@@ -2,7 +2,7 @@ import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import CommonForm from "../../components/form/CommonForm";
-import CommonInput from "../../components/form/CommonInput";
+import CommonInput from "../../components/form/ReusableFormInput";
 import { useAddCarMutation } from "../../redux/features/admin/adminManagement.api";
 import CommonSelect from "../../components/form/CommonSelect";
 
