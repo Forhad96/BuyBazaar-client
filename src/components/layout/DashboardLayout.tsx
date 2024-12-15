@@ -1,52 +1,48 @@
-import { Button, Flex, Layout } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/auth/authSlice";
-import { useState } from "react";
-const { Header, Content } = Layout;
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-const DashboardLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+import { Outlet } from "react-router-dom";
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
-  };
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import DashboardSidebar from "./DashboardSidebar";
+
+const DashboardLayout = () => {
   return (
-    <Layout style={{ height: "100%" }}>
-      <Sidebar collapsed={collapsed} />
-      <Layout>
-        <Header  style={{ padding: 0,  backgroundColor: "black" }}>
-          <Flex justify="space-between" style={{paddingTop:15}} align="center">
-            <Button
-              type="default"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 34,
-                height: 34,
-              }}
-            />
-            <Button onClick={handleLogout}>Logout</Button>
-          </Flex>
-        </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-            }}
-          >
-            {/*render Outlet */}
-            <Outlet />
+    <SidebarProvider>
+      <DashboardSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
-        </Content>
-      </Layout>
-    </Layout>
+        </header>
+        <Outlet />
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 

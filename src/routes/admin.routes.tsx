@@ -1,28 +1,51 @@
+import { CreditCard,  LayoutDashboard, ListTree, MessageSquare, Settings, Store, Users } from "lucide-react";
 import AdminDashboard from "../pages/adminDashboard/AdminDashboard";
-import CreateCar from "../pages/adminDashboard/CreateCar";
+
 import ManageBookings from "../pages/adminDashboard/ManageBookings";
 import ManageCars from "../pages/adminDashboard/ManageCars";
 
 
 export const adminPaths = [
   {
-    name: "Dashboard",
+    name: "Admin Dashboard",
     path: "dashboard",
+    icon: LayoutDashboard,
     element: <AdminDashboard />,
   },
   {
-    name: "Manage Cars",
-    path: "manage-cars",
+    name: "Manage Users",
+    path: "users",
+    icon: Users,
     element: <ManageCars />,
   },
   {
-    name: "Create Car",
-    path: "create-car",
-    element: <CreateCar />,
+    name: "Vendor Shops",
+    path: "vendors",
+    icon:Store,
+    element: <ManageBookings />,
   },
   {
-    name: "Manage Bookings",
-    path: "manage-bookings",
+    name: "Products Categories",
+    path: "categories",
+    icon:ListTree,
+    element: <ManageBookings />,
+  },
+  {
+    name: "Transactions",
+    path: "transactions",
+    icon:CreditCard,
+    element: <ManageBookings />,
+  },
+  {
+    name: "Reviews",
+    path: "reviews",
+    icon: MessageSquare, 
+    element: <ManageBookings />,
+  },
+  {
+    name: "Settings",
+    path: "settings",
+    icon: Settings,
     element: <ManageBookings />,
   },
   // {

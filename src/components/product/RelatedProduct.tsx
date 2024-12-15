@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import generateImageUrl from "@/utils/generateImageUrl";
+import Container from "../Shared/Container";
 
 const relatedProducts = [
   {
@@ -42,8 +43,8 @@ export default function RelatedProduct() {
 
   return (
     <div className="mt-12">
+      <Container className="relative">
       <h2 className="text-2xl font-bold mb-4">Related Products</h2>
-      <div className="relative">
         <div
           ref={carouselRef}
           className="flex overflow-x-auto scrollbar-hide scroll-smooth"
@@ -79,7 +80,7 @@ export default function RelatedProduct() {
         >
           <ChevronRight className="w-6 h-6" />
         </button>
-      </div>
+      </Container>
     </div>
   );
 }

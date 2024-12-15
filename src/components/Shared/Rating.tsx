@@ -13,7 +13,7 @@ const Rating: React.FC<RatingProps> = ({ value = 0, isDisabled = false }) => {
   return (
     <Flex gap="middle" vertical>
       <Rate disabled={isDisabled} className='text-pink-600' tooltips={desc} onChange={setRatingValue} value={value} />
-      {/* {ratingValue ? <span>{desc[value - 1]}</span> : null} */}
+      {ratingValue ? <span className="text-xs">{desc[value - 1]}</span> : null}
     </Flex>
   );
 };

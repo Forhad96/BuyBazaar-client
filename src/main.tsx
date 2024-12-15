@@ -10,20 +10,24 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext.tsx";
 import { CartProvider } from "./context/CartContext.tsx";
 import { WishlistProvider } from "./context/WishlistContext.tsx";
+import { SidebarProvider } from "./components/ui/sidebar.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-      <WishlistProvider>
-        <Provider store={store}>
-    <CartProvider>
+    <WishlistProvider>
+      <Provider store={store}>
+        <CartProvider>
+          <SidebarProvider>
+
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider>
               <RouterProvider router={router} />
             </ThemeProvider>
             <Toaster />
           </PersistGate>
-    </CartProvider>
-        </Provider>
-      </WishlistProvider>
+          </SidebarProvider>
+        </CartProvider>
+      </Provider>
+    </WishlistProvider>
   </React.StrictMode>
 );
