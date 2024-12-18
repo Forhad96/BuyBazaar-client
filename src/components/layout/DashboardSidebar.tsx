@@ -147,7 +147,7 @@ const DashboardSidebar = ({
       sidebarItems = undefined;
       break;
   }
-  // console.log(sidebarItems);
+  console.log(sidebarItems);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -161,26 +161,7 @@ const DashboardSidebar = ({
         </h1> */}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {sidebarItems?.map((item) => (
-                <SidebarMenuItem key={item?.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item?.url ?? ""}>
-                      {
-                        item?.icon &&
-                      <item.icon />
-                      } 
-                      <span>{item?.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+<DashboardSidebarItems items={sidebarItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
@@ -190,6 +171,37 @@ const DashboardSidebar = ({
 };
 
 export default DashboardSidebar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function TeamSwitcher({
   teams,
@@ -265,6 +277,7 @@ import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
 import NavLogo from "../navbar/NavLogo";
+import DashboardSidebarItems from "./DashboardSidebarItems";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
