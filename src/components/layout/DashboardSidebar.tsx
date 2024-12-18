@@ -147,7 +147,7 @@ const DashboardSidebar = ({
       sidebarItems = undefined;
       break;
   }
-  console.log(sidebarItems);
+  // console.log(sidebarItems);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

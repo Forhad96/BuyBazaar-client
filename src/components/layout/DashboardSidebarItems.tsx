@@ -15,7 +15,6 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { ElementType } from "react";
 
 export default function DashboardSidebarItems({
   items,
@@ -32,7 +31,7 @@ export default function DashboardSidebarItems({
     }[];
   }[];
 }) {
-  const renderItem = (item: (typeof items)[number]) => {
+  const renderSidebarItems = (item: (typeof items)[number]) => {
     if (item.children) {
       // render collapsible
       return (
@@ -84,7 +83,10 @@ export default function DashboardSidebarItems({
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>{items.map((item) => renderItem(item))}</SidebarMenu>
+      <SidebarMenu>{items.map((item) => renderSidebarItems(item))}</SidebarMenu>
     </SidebarGroup>
   );
 }
+
+
+DashboardSidebarItems.displayName = "DashboardSidebarItems";
