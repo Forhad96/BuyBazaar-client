@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Input } from '../components/ui/input'
-import { Button } from '../components/ui/button'
-import { Textarea } from '../components/ui/textarea'
+import { Input } from '../../components/ui/input'
+import { Button } from '../../components/ui/button'
+import { Textarea } from '../../components/ui/textarea'
 import SectionHeader from '@/components/Shared/SectionHeader'
 
 export default function ContactPage() {

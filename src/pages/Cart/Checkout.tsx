@@ -1,8 +1,8 @@
 
 import { useState } from 'react'
 
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
+import { Button } from '../../components/ui/button'
+import { Input } from '../../components/ui/input'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { CreditCard, Banknote, Wallet } from 'lucide-react'

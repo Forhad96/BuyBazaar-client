@@ -161,7 +161,7 @@ const DashboardSidebar = ({
         </h1> */}
       </SidebarHeader>
       <SidebarContent>
-<DashboardSidebarItems items={sidebarItems} />
+        <DashboardSidebarItems items={sidebarItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
@@ -171,37 +171,6 @@ const DashboardSidebar = ({
 };
 
 export default DashboardSidebar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export function TeamSwitcher({
   teams,
@@ -276,7 +245,6 @@ import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
-import NavLogo from "../navbar/NavLogo";
 import DashboardSidebarItems from "./DashboardSidebarItems";
 
 export function NavUser() {

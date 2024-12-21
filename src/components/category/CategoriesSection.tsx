@@ -23,7 +23,7 @@ export default function CategoriesSection() {
   const [categories, setCategories] = useState<TCategory[]>([])
   const {data:allProductCategories}= useGetAllProductCategoriesQuery({})
   const allCategories = allProductCategories?.data as TCategory[]
-console.log(allCategories);
+// console.log(allCategories);
 
   useEffect(() => {
     // In a real application, this would be an API call

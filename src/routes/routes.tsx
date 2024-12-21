@@ -4,10 +4,11 @@ import routesGenerator from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 
 import ProtectedRoute from "../components/layout/ProtectedRoute";
-import userPaths from "./user.routes";
+
 import { homePaths } from "./home.routes";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import NotFound from "../components/Shared/NotFound";
+import userPaths from "./user.routes";
 
 const router = createBrowserRouter([
   {

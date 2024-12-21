@@ -24,7 +24,7 @@ import {
 
 import AdminDashboard from "../pages/adminDashboard/AdminDashboard";
 import { TUserPath } from "@/types";
-import { ManageCustomer } from "@/pages/adminDashboard/ManageCustomer";
+import { ManageUsers } from "@/pages/adminDashboard/ManageUsers";
 
 
 export const adminPaths: TUserPath[] = [
@@ -44,7 +44,7 @@ export const adminPaths: TUserPath[] = [
         name: "Customers",
         path: "users/customers",
         icon: User,
-        element: <ManageCustomer/>
+        element: <ManageUsers/>
       },
       {
         name: "Vendors",

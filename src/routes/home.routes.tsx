@@ -1,27 +1,27 @@
-import Product from "@/pages/Product";
-import About from "../pages/About";
-import ContactUs from "../pages/ContactUs";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import RegisterPage from "../pages/Register";
-import SignUp from "../pages/SignUp";
-import ProductDetails from "@/pages/ProductDetails";
-import Vendor from "@/pages/Vendor";
-import VendorDetails from "@/pages/VendorDetails";
-import FlashSale from "@/pages/FlashSale";
-import Cart from "@/pages/Cart";
-import Checkout from "@/pages/Checkout";
-import Categories from "@/pages/Categories";
-import Wishlist from "@/pages/Wishlist";
-import ReturnsPolicy from "@/pages/ReturnsPolicy";
-import ShippingPolicy from "@/pages/ShippingPolicy";
-import OrderConfirm from "@/pages/OrderConfirm";
+import Product from "@/pages/Product/Product";
+import About from "../pages/About/About";
+import ContactUs from "../pages/ContactUs/ContactUs";
+import HomePage from "../pages/Home/HomePage";
+import Login from "../pages/Auth/Login";
+import RegisterPage from "../pages/Auth/Register";
+import SignUp from "../pages/Auth/SignUp";
+import ProductDetails from "@/pages/Product/ProductDetails";
+import Vendor from "@/pages/Vendor/Vendor";
+import VendorDetails from "@/pages/Vendor/VendorDetails";
+import FlashSale from "@/pages/FlashSale/FlashSale";
+import Cart from "@/pages/Cart/Cart";
+import Checkout from "@/pages/Cart/Checkout";
+import Categories from "@/pages/Category/Categories";
+import Wishlist from "@/pages/Wishlist/Wishlist";
+import ReturnsPolicy from "@/pages/Policy/ReturnsPolicy";
+import ShippingPolicy from "@/pages/Policy/ShippingPolicy";
+import OrderConfirm from "@/pages/Cart/OrderConfirm";
 import PexelsImageSearch from "@/pages/PexelsImageSearch";
 
 export const homePaths = [
   {
     path: "/",
-    element: <Home />,
+    element: <HomePage />,
   },
 
   {

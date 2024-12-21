@@ -2,7 +2,7 @@ import { baseApi } from "../../api/baseApi";
 
 const adminManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllCars: builder.query({
+    getAllUsers: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -12,25 +12,9 @@ const adminManagementApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: "/cars",
+          url: "/users",
           method: "GET",
-          // params,
-        };
-      },
-    }),
-    getAllBookings: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-        if (args) {
-          args.forEach((item: { name: string; value: string }) => {
-            params.append(item.name, item.value);
-          });
-        }
-
-        return {
-          url: "/bookings",
-          method: "GET",
-          // params,
+          params,
         };
       },
     }),
@@ -53,4 +37,4 @@ const adminManagementApi = baseApi.injectEndpoints({
     }),
   }),
 });
-export const {useAddCarMutation,useGetAllBookingsQuery} = adminManagementApi
+export const {useAddCarMutation,useGetAllUsersQuery} = adminManagementApi

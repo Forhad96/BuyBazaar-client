@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/ui/button'
+import { Button } from '../../components/ui/button'
 import { CheckCircle } from 'lucide-react'
 
 export default function OrderConfirm() {

@@ -18,6 +18,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useGetAllUsersQuery } from '@/redux/features/admin/adminManagement.api'
+import { TUserResponseData } from '@/types'
+import { Edit2, Trash2 } from 'lucide-react'
 
 type User = {
   id: string
@@ -37,15 +40,20 @@ const initialUsers: User[] = [
   { id: '5', name: 'Charlie Wilson', email: 'charlie@example.com', role: 'customer', status: 'active', isSuspended: false, joinDate: '2023-05-12' },
 ]
 
-export function ManageCustomer() {
+export function ManageUsers() {
+  const [params , setParams] = useState([]);
+  const [page, setPage] = useState(1);
+  const {data: usersData}=useGetAllUsersQuery([]);
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [searchTerm, setSearchTerm] = useState('')
   const [roleFilter, setRoleFilter] = useState<string[]>([])
   const [statusFilter, setStatusFilter] = useState<string[]>([])
   const [sortConfig, setSortConfig] = useState<{ key: keyof User; direction: 'asc' | 'desc' } | null>(null)
 
+  console.log(usersData);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
+    console.log(event.target.value);
   }
 
   const handleRoleFilter = (role: string) => {
@@ -179,12 +187,6 @@ export function ManageCustomer() {
               </Button>
             </TableHead>
             <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('isSuspended')}>
-                Suspended
-                {sortConfig?.key === 'isSuspended' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
               <Button variant="ghost" onClick={() => handleSort('joinDate')}>
                 Join Date
                 {sortConfig?.key === 'joinDate' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
@@ -194,22 +196,23 @@ export function ManageCustomer() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredAndSortedUsers.map((user) => (
+          {usersData?.data?.map((user:TUserResponseData) => (
             <TableRow key={user.id}>
               <TableCell className="font-medium">{user.id}</TableCell>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>{user.status}</TableCell>
+              <TableCell>{user.createdAt.toString()}</TableCell>
               <TableCell>
-                <Checkbox
-                  checked={user.isSuspended}
-                  onCheckedChange={() => handleSuspend(user.id)}
-                />
-              </TableCell>
-              <TableCell>{user.joinDate}</TableCell>
-              <TableCell>
-                <Button variant="ghost">Edit</Button>
+                <Button variant="ghost">
+                  <Edit2 className="mr-2 h-4 w-4" />
+              
+                </Button>
+                <Button variant="ghost">
+
+                  <Trash2 className="mr-2 h-4 w-4" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

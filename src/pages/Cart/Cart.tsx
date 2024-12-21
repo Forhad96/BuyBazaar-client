@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import SectionHeader from "@/components/Shared/SectionHeader";
 import { Link } from "react-router-dom";
 // import { useCart } from "@/context/CartContext";
