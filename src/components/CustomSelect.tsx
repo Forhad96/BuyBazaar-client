@@ -10,12 +10,12 @@ import {
 
 interface CustomSelectProps {
   options: { value: string, label: string }[],
-  placeholder: string,
-  label: string,
+  placeholder?: string,
+  label?: string,
   onChange: (value: string) => void
 }
 
-export function CustomSelect({ options, placeholder, label, onChange }: CustomSelectProps) {
+export function CustomSelect({ options, placeholder="Select on option", label, onChange }: CustomSelectProps) {
   return (
     <Select onValueChange={onChange}>
       <SelectTrigger className="w-[180px]">
