@@ -21,6 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useGetAllUsersQuery } from '@/redux/features/admin/adminManagement.api'
 import { TUserResponseData } from '@/types'
 import { Edit2, Trash2 } from 'lucide-react'
+import { UserTable } from './components/UserTable'
 
 type User = {
   id: string
@@ -43,7 +44,7 @@ const initialUsers: User[] = [
 export function ManageUsers() {
   const [params , setParams] = useState([]);
   const [page, setPage] = useState(1);
-  const {data: usersData}=useGetAllUsersQuery([]);
+  const {data: usersData,isLoading,isError}=useGetAllUsersQuery([]);
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [searchTerm, setSearchTerm] = useState('')
   const [roleFilter, setRoleFilter] = useState<string[]>([])
@@ -153,71 +154,8 @@ export function ManageUsers() {
           </DropdownMenu>
         </div>
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">
-              <Button variant="ghost" onClick={() => handleSort('id')}>
-                ID
-                {sortConfig?.key === 'id' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('name')}>
-                Name
-                {sortConfig?.key === 'name' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('email')}>
-                Email
-                {sortConfig?.key === 'email' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('role')}>
-                Role
-                {sortConfig?.key === 'role' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('status')}>
-                Status
-                {sortConfig?.key === 'status' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort('joinDate')}>
-                Join Date
-                {sortConfig?.key === 'joinDate' && (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
-              </Button>
-            </TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {usersData?.data?.map((user:TUserResponseData) => (
-            <TableRow key={user.id}>
-              <TableCell className="font-medium">{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>{user.status}</TableCell>
-              <TableCell>{user.createdAt.toString()}</TableCell>
-              <TableCell>
-                <Button variant="ghost">
-                  <Edit2 className="mr-2 h-4 w-4" />
-              
-                </Button>
-                <Button variant="ghost">
+      <UserTable users={usersData?.data} isLoading={isLoading} isError={isError}/>
 
-                  <Trash2 className="mr-2 h-4 w-4" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
     </div>
   )
 }
