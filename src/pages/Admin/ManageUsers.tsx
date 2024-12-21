@@ -1,14 +1,4 @@
-"use client"
-
 import { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,10 +7,9 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { useGetAllUsersQuery } from '@/redux/features/admin/adminManagement.api'
-import { TUserResponseData } from '@/types'
-import { Edit2, Trash2 } from 'lucide-react'
+
 import { UserTable } from './components/UserTable'
 
 type User = {

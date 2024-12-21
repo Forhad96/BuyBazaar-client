@@ -1,4 +1,4 @@
-import AdminDashboard from "@/pages/adminDashboard/AdminDashboard";
+import AdminDashboard from "@/pages/Admin/AdminDashboard";
 
 const userPaths = [
   {

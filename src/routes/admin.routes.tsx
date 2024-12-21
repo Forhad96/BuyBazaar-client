@@ -22,9 +22,9 @@ import {
   Settings
 } from "lucide-react";
 
-import AdminDashboard from "../pages/adminDashboard/AdminDashboard";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 import { TUserPath } from "@/types";
-import { ManageUsers } from "@/pages/adminDashboard/ManageUsers";
+import { ManageUsers } from "@/pages/Admin/ManageUsers";
 
 
 export const adminPaths: TUserPath[] = [
@@ -32,29 +32,30 @@ export const adminPaths: TUserPath[] = [
     name: "Dashboard",
     path: "dashboard",
     icon: LayoutDashboard,
+    // isActive: true,
     element: <AdminDashboard />,
   },
   {
     name: "User Management",
-    path: "users",
+    path: "UserManagementPage",
     icon: Users,
-    element: "UserManagementPage",
+    // element: "UserManagementPage",
     children: [
       {
-        name: "Customers",
-        path: "users/customers",
+        name: "All Users",
+        path: "users",
         icon: User,
         element: <ManageUsers/>
       },
       {
         name: "Vendors",
-        path: "users/vendors",
+        path: "vendors",
         icon: UserCheck,
         element: "VendorPage"
       },
       {
         name: "Admins",
-        path: "users/admins",
+        path: "admins",
         icon: Shield,
         element: "AdminPage"
       }

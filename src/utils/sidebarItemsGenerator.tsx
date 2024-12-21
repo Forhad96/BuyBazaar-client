@@ -1,4 +1,4 @@
-import { TSidebarItem, TUserPath } from "../types";
+import { TSidebarItem, TUserPath } from "@/types";
 
 const sidebarItemsGenerator = (items: TUserPath[], role: string) => {
   const sidebarItems = items.reduce((acc: TSidebarItem[], item) => {
@@ -15,15 +15,17 @@ const sidebarItemsGenerator = (items: TUserPath[], role: string) => {
         title: item.name!,
         url: item.name ?? "",
         icon: item?.icon,
-        children: item.children.map((child) => {
+        children: item.children
+        .map((child) => {
           if (child.name) {
             return {
               title: child.name!,
               url: `/${role}/${child.path}`,
-              icon: child.icon
+              icon: child.icon,
             };
           }
-        }),
+        })
+        .filter((child) => child !== undefined) as TSidebarItem[],
       });
     }
 

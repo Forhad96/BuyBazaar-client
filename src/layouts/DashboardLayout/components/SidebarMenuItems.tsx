@@ -15,21 +15,12 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { TSidebarItem } from "@/types";
 
-export default function DashboardSidebarItems({
+export default function SidebarMenuItems({
   items,
 }: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    children?: {
-      title: string;
-      url: string;
-      icon?: LucideIcon;
-    }[];
-  }[];
+  items: TSidebarItem[];
 }) {
   const renderSidebarItems = (item: (typeof items)[number]) => {
     if (item.children) {
@@ -55,7 +46,7 @@ export default function DashboardSidebarItems({
                   <SidebarMenuSubItem key={subItem.title}>
                     <SidebarMenuSubButton asChild>
                       <a href={subItem.url}>
-                      {subItem.icon && <subItem.icon />}
+                        {subItem.icon && <subItem.icon />}
                         <span>{subItem.title}</span>
                       </a>
                     </SidebarMenuSubButton>
@@ -70,23 +61,22 @@ export default function DashboardSidebarItems({
       // render not collapsible
       return (
         <SidebarMenuItem key={item.title}>
-        <SidebarMenuButton asChild>
-          <a href={item.url}>
-          {item.icon && <item.icon />}
-            <span>{item.title}</span>
-          </a>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
+          <SidebarMenuButton asChild>
+            <a href={item.url}>
+              {item.icon && <item.icon />}
+              <span>{item.title}</span>
+            </a>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
       );
     }
   };
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>BuyBazaar</SidebarGroupLabel>
       <SidebarMenu>{items.map((item) => renderSidebarItems(item))}</SidebarMenu>
     </SidebarGroup>
   );
 }
 
-
-DashboardSidebarItems.displayName = "DashboardSidebarItems";
+SidebarMenuItems.displayName = "DashboardSidebarItems";
