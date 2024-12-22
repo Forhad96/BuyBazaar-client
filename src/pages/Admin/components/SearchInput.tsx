@@ -14,7 +14,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   onChange,
 }) => {
   return (
-    <div className="">
+    <div className="w-9/12">
       <Input
         type="text"
         placeholder={placeholder}

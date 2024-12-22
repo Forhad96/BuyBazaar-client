@@ -117,7 +117,7 @@ const UserTableBody = ({ users }: { users: TUserResponseData[] }) => {
     <TableBody>
       {users?.map((user) => (
         <TableRow key={user.id}>
-          <TableCell className="font-medium">{user.id}</TableCell>
+          <TableCell className="font-medium">{user.id.slice(-8)}</TableCell>
           <TableCell>{user.name}</TableCell>
           <TableCell>{user.email}</TableCell>
           <TableCell>{user.role}</TableCell>
