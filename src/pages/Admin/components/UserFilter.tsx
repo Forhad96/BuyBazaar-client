@@ -1,8 +1,7 @@
 import { CustomSelect } from "@/components/CustomSelect";
-
 export const UserFilter = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-between items-center gap-4">
       <StatusFilter />
       <RoleFilter />
       <SortBy />
@@ -14,11 +13,15 @@ export const UserFilter = () => {
 const StatusFilter = () => {
   return (
     <div>
+      <label htmlFor="status" className="font-semibold text-gray-700 text-sm">
+        Status
+      </label>
       <CustomSelect
         options={[
           { value: "active", label: "Active" },
           { value: "inactive", label: "Inactive" },
         ]}
+        label="Status"
         onChange={() => {}}
       />
     </div>
@@ -27,6 +30,7 @@ const StatusFilter = () => {
 const RoleFilter = () => {
   return (
     <div>
+      <label htmlFor="role">Role:</label>
       <CustomSelect
         options={[
           { value: "admin", label: "Admin" },
@@ -40,6 +44,9 @@ const RoleFilter = () => {
 const OrderBy = () => {
   return (
     <div>
+      <label htmlFor="order" className="font-semibold text-gray-700 text-sm">
+        Order
+      </label>
       <CustomSelect
         options={[
           { value: "asc", label: "Ascending" },
@@ -53,6 +60,9 @@ const OrderBy = () => {
 const SortBy = () => {
   return (
     <div>
+      <label htmlFor="sortBy" className="font-semibold text-gray-700 text-sm">
+        SortBy
+      </label>
       <CustomSelect
         options={[
           { value: "name", label: "Name" },

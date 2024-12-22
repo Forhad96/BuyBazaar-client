@@ -144,15 +144,13 @@ export function ManageUsers() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between mx-6">
+      <div className=" justify-between mx-6 space-y-4">
+        <UserFilter />
         <SearchInput
           placeholder="Search..."
           value={searchTerm}
           onChange={handleSearch}
         />
-        <div className="space-x-2">
-<UserFilter/>
-        </div>
       </div>
       <UserTable
         users={usersData?.data}
