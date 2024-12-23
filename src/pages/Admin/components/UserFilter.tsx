@@ -1,16 +1,36 @@
+
 import { CustomSelect } from "@/components/CustomSelect";
-export const UserFilter = () => {
+
+interface UserSearchAndFilterProps {
+  handleFilterChange: (name: string, value: string) => void;
+}
+export const UserFilter = ({ handleFilterChange }: UserSearchAndFilterProps) => {
+  // const [filters, setFilters] = useState([
+  //   { name: "status", value: "" },
+  //   { name: "role", value: "" },
+  //   { name: "sortBy", value: "" },
+  //   { name: "order", value: "" },
+  // ]);
+// console.log(filters);
+  // const handleFilterChange = (name: string, value: string) => {
+  //   setFilters((prevFilters) =>
+  //     prevFilters.map((filter) =>
+  //       filter.name === name ? { ...filter, value } : filter
+  //     )
+  //   );
+  // };
+
   return (
-    <div className="flex justify-between items-center gap-4">
-      <StatusFilter />
-      <RoleFilter />
-      <SortBy />
-      <OrderBy />
+    <div className="flex  flex-wrap items-center gap-4">
+      <StatusFilter onChange={handleFilterChange} />
+      <RoleFilter onChange={handleFilterChange} />
+      {/* <SortBy onChange={handleFilterChange} />
+      <OrderBy onChange={handleFilterChange} /> */}
     </div>
   );
 };
 
-const StatusFilter = () => {
+const StatusFilter = ({ onChange }: { onChange: (name: string, value: string) => void }) => {
   return (
     <div>
       <label htmlFor="status" className="font-semibold text-gray-700 text-sm">
@@ -18,30 +38,34 @@ const StatusFilter = () => {
       </label>
       <CustomSelect
         options={[
-          { value: "active", label: "Active" },
-          { value: "inactive", label: "Inactive" },
+          { value: "ACTIVE", label: "Active" },
+          { value: "SUSPENDED", label: "Suspended" },
+          { value: "DELETED", label: "Deleted" },
         ]}
         label="Status"
-        onChange={() => {}}
+        onChange={(value) => onChange("status", value)}
       />
     </div>
   );
 };
-const RoleFilter = () => {
+
+const RoleFilter = ({ onChange }: { onChange: (name: string, value: string) => void }) => {
   return (
     <div>
       <label htmlFor="role">Role:</label>
       <CustomSelect
         options={[
-          { value: "admin", label: "Admin" },
-          { value: "vendor", label: "Vendor" },
+          { value: "ADMIN", label: "Admin" },
+          { value: "VENDOR", label: "Vendor" },
+          { value: "CUSTOMER", label: "Customer" },
         ]}
-        onChange={() => {}}
+        onChange={(value) => onChange("role", value)}
       />
     </div>
   );
 };
-const OrderBy = () => {
+
+const OrderBy = ({ onChange }: { onChange: (name: string, value: string) => void }) => {
   return (
     <div>
       <label htmlFor="order" className="font-semibold text-gray-700 text-sm">
@@ -52,12 +76,13 @@ const OrderBy = () => {
           { value: "asc", label: "Ascending" },
           { value: "desc", label: "Descending" },
         ]}
-        onChange={() => {}}
+        onChange={(value) => onChange("createdAt", value)}
       />
     </div>
   );
 };
-const SortBy = () => {
+
+const SortBy = ({ onChange }: { onChange: (name: string, value: string) => void }) => {
   return (
     <div>
       <label htmlFor="sortBy" className="font-semibold text-gray-700 text-sm">
@@ -68,7 +93,7 @@ const SortBy = () => {
           { value: "name", label: "Name" },
           { value: "email", label: "Email" },
         ]}
-        onChange={() => {}}
+        onChange={(value) => onChange("sortBy", value)}
       />
     </div>
   );

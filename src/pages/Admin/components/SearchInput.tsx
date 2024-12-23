@@ -6,6 +6,7 @@ interface SearchInputProps {
   placeholder?: string;
   value: string;
   onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  // onChange: (name: string, value: string) => void;
 }
 
 export const SearchInput: React.FC<SearchInputProps> = ({
@@ -22,6 +23,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         size="large"
         variant="outlined"
         onChange={onChange}
+        // onChange={(e) => onChange("status", e.target.value)}
         className="search-input"
         prefix={<SearchOutlined />}
       />

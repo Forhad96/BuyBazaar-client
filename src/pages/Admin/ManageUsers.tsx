@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useGetAllUsersQuery } from "@/redux/features/admin/adminManagement.api";
 import { UserTable } from "./components/UserTable";
 import { SearchInput } from "./components/SearchInput";
@@ -7,33 +7,56 @@ import { ResetButton } from "./components/ResetButton";
 import Container from "@/components/Shared/Container";
 import { TQueryParam } from "@/types";
 import { debounce } from "@/utils/debounce";
+import { CustomPagination } from "@/components/CustomPagination";
 
 export function ManageUsers() {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+
   const {
     data: usersData,
     isLoading,
     isError,
   } = useGetAllUsersQuery([
     { name: "page", value: page },
+    { name: "limit", value: 3 },
     { name: "sort", value: "id" },
     ...params,
   ]);
 
   const debouncedSearchTerm = useCallback(
-    debounce((searchTerm: string) => {
-      setParams([{ name: "searchTerm", value: searchTerm }]);
+    debounce((value: string) => {
+      setParams((prev) =>
+        value
+          ? [
+              ...prev.filter((param) => param.name !== "searchTerm"),
+              { name: "searchTerm", value },
+            ]
+          : prev.filter((param) => param.name !== "searchTerm")
+      );
     }, 500),
-    [] // Empty array ensures that effect is only run on mount and unmount
+    []
   );
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    // setParams([{ name: "searchTerm", value: e.target.value }]);
-    debouncedSearchTerm(e.target.value);
-  };
+  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    debouncedSearchTerm(value);
+  }, [debouncedSearchTerm]);
+
+  const handleFilterChange = useCallback((name: string, value: string) => {
+    setParams((prev) =>
+      value
+        ? [...prev.filter((param) => param.name !== name), { name, value }]
+        : prev.filter((param) => param.name !== name)
+    );
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setSearchTerm("");
+    setParams([]);
+  }, []);
 
   return (
     <Container className="space-y-4">
@@ -43,14 +66,17 @@ export function ManageUsers() {
           value={searchTerm}
           onChange={handleSearch}
         />
-        <ResetButton onReset={() => setSearchTerm("")} />
+        <ResetButton onReset={handleReset} />
       </div>
-      <UserFilter />
+      <UserFilter handleFilterChange={handleFilterChange} />
       <UserTable
         users={usersData?.data}
         isLoading={isLoading}
         isError={isError}
       />
+      <CustomPagination totalPageCount={usersData?.meta?.total} activePage={usersData?.meta?.page} onPageSelect={setPage} />
     </Container>
   );
 }
+
+ManageUsers.displayName = "ManageUsers";
