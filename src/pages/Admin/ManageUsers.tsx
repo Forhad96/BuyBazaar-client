@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { useGetAllUsersQuery } from "@/redux/features/admin/adminManagement.api";
 import { UserTable } from "./components/UserTable";
 import { SearchInput } from "./components/SearchInput";
@@ -14,7 +14,7 @@ export function ManageUsers() {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortConfig, setSortConfig] = useState<TSortConfiguration>(undefined);
+  const [sortConfig, setSortConfig] = useState<TSortConfiguration>();
 
   const {
     data: usersData,
@@ -23,22 +23,19 @@ export function ManageUsers() {
   } = useGetAllUsersQuery([
     { name: "page", value: page },
     { name: "limit", value: 3 },
-    // { name: sortConfig?.sortBy, value: sortConfig?.sortBy },
-    // { name: sortConfig?.sortOrder, value: sortConfig?.sortOrder },
     ...params,
   ]);
 
+  const updateParams = (name: string, value?: string) => {
+    setParams((prev) =>
+      value
+        ? [...prev.filter((param) => param.name !== name), { name, value }]
+        : prev.filter((param) => param.name !== name)
+    );
+  };
+
   const debouncedSearchTerm = useCallback(
-    debounce((value: string) => {
-      setParams((prev) =>
-        value
-          ? [
-              ...prev.filter((param) => param.name !== "searchTerm"),
-              { name: "searchTerm", value },
-            ]
-          : prev.filter((param) => param.name !== "searchTerm")
-      );
-    }, 500),
+    debounce((value: string) => updateParams("searchTerm", value), 500),
     []
   );
 
@@ -51,19 +48,16 @@ export function ManageUsers() {
     [debouncedSearchTerm]
   );
 
-  const handleFilterChange = useCallback((name: string, value: string) => {
-    setParams((prev) =>
-      value
-        ? [...prev.filter((param) => param.name !== name), { name, value }]
-        : prev.filter((param) => param.name !== name)
-    );
-  }, []);
+  const handleFilterChange = useCallback(
+    (name: string, value: string) => updateParams(name, value),
+    []
+  );
 
   const handleReset = useCallback(() => {
     setSearchTerm("");
     setParams([]);
   }, []);
-  // console.log(sortConfig);
+
   return (
     <Container className="space-y-4">
       <div className="flex justify-between">
@@ -79,7 +73,6 @@ export function ManageUsers() {
         users={usersData?.data}
         isLoading={isLoading}
         isError={isError}
-        // sortConfig={{ key: "id", direction: "asc" }}
         setSortConfig={setSortConfig}
       />
       <CustomPagination

@@ -12,13 +12,14 @@ interface CustomSelectProps {
   options: { value: string, label: string }[],
   placeholder?: string,
   label?: string,
-  onChange: (value: string) => void
+  onChange: (value: string) => void,
+  defaultValue?: string,
 }
 
-export function CustomSelect({ options, placeholder="Select on option", label, onChange }: CustomSelectProps) {
+export function CustomSelect({ options, placeholder="Select on option", label, onChange, defaultValue }: CustomSelectProps) {
   return (
-    <Select onValueChange={onChange}>
-      <SelectTrigger className="w-[180px]">
+    <Select defaultValue={defaultValue} onValueChange={onChange}>
+      <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

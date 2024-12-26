@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { TUserResponseData } from "@/types";
-import { Edit2, Trash2 } from "lucide-react";
-import { FC } from "react";
+import { AlertCircle, ArrowDown, ArrowUp, Edit2, Trash2, UserX } from "lucide-react";
+import { FC, useState } from "react";
 
 import { TSortConfiguration } from "../types";
+import { CustomSelect } from "@/components/CustomSelect";
 type UserTableProps = {
   users: TUserResponseData[];
   isLoading?: boolean;
@@ -23,16 +24,41 @@ export const UserTable: FC<UserTableProps> = ({
   users,
   isLoading,
   isError,
-  sortConfig,
   setSortConfig,
 }) => {
   const handleSort = (sortBy: string, sortOrder: "asc" | "desc") => {
     setSortConfig({ sortBy, sortOrder });
-    console.log(sortBy, sortOrder);
   };
+
+  if (isLoading) return <SkeletonTable />;
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 text-center">
+        <AlertCircle className="text-red-500 text-6xl mb-4" />
+        <p className="text-lg font-semibold text-gray-800">Error Loading Users</p>
+        <p className="text-sm text-gray-600">
+          Something went wrong. Please refresh the page or try again later.
+        </p>
+      </div>
+    );
+  }
+
+  if (!users.length) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 text-center">
+        <UserX className="text-gray-400 text-6xl mb-4" />
+        <p className="text-lg font-semibold text-gray-800">No Users Found</p>
+        <p className="text-sm text-gray-600">
+          There are no users to display at the moment.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Table>
-      <UserTableHeader handleSort={handleSort} sortConfig={sortConfig} />
+      <UserTableHeader handleSort={handleSort} />
       <UserTableBody users={users} />
     </Table>
   );
@@ -40,74 +66,75 @@ export const UserTable: FC<UserTableProps> = ({
 
 const UserTableHeader = ({
   handleSort,
-  sortConfig,
 }: {
   handleSort?: (sortBy: string, sortOrder: "asc" | "desc") => void;
-  sortConfig?: { key: string; direction: "asc" | "desc" };
 }) => {
-  // const sortConfig = { key: "id", direction: "asc" };
+  const [currentSort, setCurrentSort] = useState<{
+    field: string;
+    order: "asc" | "desc";
+  }>({
+    field: "",
+    order: "asc",
+  });
+
+  const handleClick = (sortBy: string) => {
+    const sortOrder =
+      currentSort.field === sortBy && currentSort.order === "asc"
+        ? "desc"
+        : "asc";
+    setCurrentSort({ field: sortBy, order: sortOrder });
+    handleSort && handleSort(sortBy, sortOrder);
+  };
+
+  const renderSortIcon = (field: string) => {
+    if (currentSort.field === field) {
+      return currentSort.order === "asc" ? (
+        <ArrowUp size={16} />
+      ) : (
+        <ArrowDown size={16} />
+      );
+    }
+    return null;
+  };
+
   return (
     <TableHeader>
       <TableRow>
-        <TableHead className="w-[100px]">
-          <Button
-            variant="ghost"
-            onClick={() => handleSort && handleSort("_id", "desc")}
-          >
-            ID
-            {sortConfig?.key === "id" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("_id")}
+          className="cursor-pointer hover:bg-gray-100 flex items-center gap-2"
+        >
+          ID {renderSortIcon("_id")}
         </TableHead>
-        <TableHead>
-          <Button
-            variant="ghost"
-            // onClick={() => handleSort && handleSort("name")}
-          >
-            Name
-            {sortConfig?.key === "name" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("name")}
+          className="cursor-pointer hover:bg-gray-100"
+        >
+          Name {renderSortIcon("name")}
         </TableHead>
-        <TableHead>
-          <Button
-            variant="ghost"
-            // onClick={() => handleSort && handleSort("email")}
-          >
-            Email
-            {sortConfig?.key === "email" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("email")}
+          className="cursor-pointer hover:bg-gray-100"
+        >
+          Email {renderSortIcon("email")}
         </TableHead>
-        <TableHead>
-          <Button
-            variant="ghost"
-            // onClick={() => handleSort && handleSort("role")}
-          >
-            Role
-            {sortConfig?.key === "role" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("role")}
+          className="cursor-pointer hover:bg-gray-100"
+        >
+          Role {renderSortIcon("role")}
         </TableHead>
-        <TableHead>
-          <Button
-            variant="ghost"
-            // onClick={() => handleSort && handleSort("status")}
-          >
-            Status
-            {sortConfig?.key === "status" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("status")}
+          className="cursor-pointer hover:bg-gray-100"
+        >
+          Status {renderSortIcon("status")}
         </TableHead>
-        <TableHead>
-          <Button
-            variant="ghost"
-            // onClick={() => handleSort && handleSort("joinDate")}
-          >
-            Join Date
-            {sortConfig?.key === "joinDate" &&
-              (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-          </Button>
+        <TableHead
+          onClick={() => handleClick("join_date")}
+          className="cursor-pointer hover:bg-gray-100"
+        >
+          Join Date {renderSortIcon("join_date")}
         </TableHead>
         <TableHead>Actions</TableHead>
       </TableRow>
@@ -115,7 +142,13 @@ const UserTableHeader = ({
   );
 };
 
+export default UserTableHeader;
+
 const UserTableBody = ({ users }: { users: TUserResponseData[] }) => {
+  const updateUser = async (id: string, data: Partial<TUserResponseData>) => {
+    console.log(id, data);
+  };
+
   return (
     <TableBody>
       {users?.map((user) => (
@@ -124,7 +157,17 @@ const UserTableBody = ({ users }: { users: TUserResponseData[] }) => {
           <TableCell>{user.name}</TableCell>
           <TableCell>{user.email}</TableCell>
           <TableCell>{user.role}</TableCell>
-          <TableCell>{user.status}</TableCell>
+          <TableCell>
+            <CustomSelect
+              defaultValue={user.status}
+              options={[
+                { value: "ACTIVE", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "Blocked", label: "Blocked" },
+              ]}
+              onChange={(value) => updateUser(user.id, { status: value })}
+            />
+          </TableCell>
           <TableCell>{user.createdAt.toString()}</TableCell>
           <TableCell>
             <Button variant="ghost">
@@ -142,3 +185,41 @@ const UserTableBody = ({ users }: { users: TUserResponseData[] }) => {
 
 UserTable.displayName = "UserTable";
 UserTableBody.displayName = "UserTableBody";
+
+
+const SkeletonTable = () => {
+  const columns = [
+    { field: "id", label: "ID", width: "w-16" },
+    { field: "name", label: "Name", width: "w-32" },
+    { field: "email", label: "Email", width: "w-48" },
+    { field: "role", label: "Role", width: "w-24" },
+    { field: "status", label: "Status", width: "w-20" },
+    { field: "joinDate", label: "Join Date", width: "w-28" },
+    { field: "actions", label: "Actions", width: "w-16 h-8" },
+  ];
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          {columns.map((column) => (
+            <TableHead key={column.field}>{column.label}</TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Array.from({ length: 5 }).map((_, rowIndex) => (
+          <TableRow key={rowIndex}>
+            {columns.map((column, colIndex) => (
+              <TableCell key={colIndex}>
+                <div
+                  className={`h-4 ${column.width} rounded bg-gray-200 animate-pulse`}
+                ></div>
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
