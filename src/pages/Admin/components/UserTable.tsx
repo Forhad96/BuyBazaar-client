@@ -10,24 +10,26 @@ import { Button } from "@/components/ui/button";
 import { TUserResponseData } from "@/types";
 import { Edit2, Trash2 } from "lucide-react";
 import { FC } from "react";
+
+import { TSortConfiguration } from "../types";
 type UserTableProps = {
   users: TUserResponseData[];
   isLoading?: boolean;
   isError?: boolean;
-  handleSort?: (key: string) => void;
-  sortConfig?: {
-    key: string;
-    direction: "asc" | "desc";
-  };
+  setSortConfig: React.Dispatch<React.SetStateAction<TSortConfiguration>>;
 };
 
 export const UserTable: FC<UserTableProps> = ({
   users,
   isLoading,
   isError,
-  handleSort,
   sortConfig,
+  setSortConfig,
 }) => {
+  const handleSort = (sortBy: string, sortOrder: "asc" | "desc") => {
+    setSortConfig({ sortBy, sortOrder });
+    console.log(sortBy, sortOrder);
+  };
   return (
     <Table>
       <UserTableHeader handleSort={handleSort} sortConfig={sortConfig} />
@@ -40,16 +42,17 @@ const UserTableHeader = ({
   handleSort,
   sortConfig,
 }: {
-  handleSort?: (key: string) => void;
+  handleSort?: (sortBy: string, sortOrder: "asc" | "desc") => void;
   sortConfig?: { key: string; direction: "asc" | "desc" };
 }) => {
+  // const sortConfig = { key: "id", direction: "asc" };
   return (
     <TableHeader>
       <TableRow>
         <TableHead className="w-[100px]">
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("id")}
+            onClick={() => handleSort && handleSort("_id", "desc")}
           >
             ID
             {sortConfig?.key === "id" &&
@@ -59,7 +62,7 @@ const UserTableHeader = ({
         <TableHead>
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("name")}
+            // onClick={() => handleSort && handleSort("name")}
           >
             Name
             {sortConfig?.key === "name" &&
@@ -69,7 +72,7 @@ const UserTableHeader = ({
         <TableHead>
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("email")}
+            // onClick={() => handleSort && handleSort("email")}
           >
             Email
             {sortConfig?.key === "email" &&
@@ -79,7 +82,7 @@ const UserTableHeader = ({
         <TableHead>
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("role")}
+            // onClick={() => handleSort && handleSort("role")}
           >
             Role
             {sortConfig?.key === "role" &&
@@ -89,7 +92,7 @@ const UserTableHeader = ({
         <TableHead>
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("status")}
+            // onClick={() => handleSort && handleSort("status")}
           >
             Status
             {sortConfig?.key === "status" &&
@@ -99,7 +102,7 @@ const UserTableHeader = ({
         <TableHead>
           <Button
             variant="ghost"
-            onClick={() => handleSort && handleSort("joinDate")}
+            // onClick={() => handleSort && handleSort("joinDate")}
           >
             Join Date
             {sortConfig?.key === "joinDate" &&

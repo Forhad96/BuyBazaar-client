@@ -15,31 +15,27 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: routesGenerator(homePaths),
-    errorElement:<NotFound/>
+    errorElement: <NotFound />,
   },
   {
     path: "/admin",
     element: (
         <DashboardLayout />
-        //uncomment to use protected route
-      // <ProtectedRoute role="admin">
-      // </ProtectedRoute>
+    // <ProtectedRoute role="SUPERADMIN">
+    //   </ProtectedRoute>
     ),
     children: routesGenerator(adminPaths),
   },
   {
     path: "/user",
     element: (
-        <DashboardLayout/>
-        //uncomment to use protected route
+      <DashboardLayout />
+      //uncomment to use protected route
       // <ProtectedRoute role="user">
       // </ProtectedRoute>
     ),
     children: routesGenerator(userPaths),
   },
-
-
-
 ]);
 
 export default router;

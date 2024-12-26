@@ -17,6 +17,7 @@ const ProtectedRoute = ({ children, role }: TProtectedRoute) => {
   if (token) {
     user = verifyToken(token);
   }
+// console.log(token);
   const dispatch = useAppDispatch();
 
   if (role !== undefined && role !== (user as TUser)?.role) {

@@ -7,3 +7,5 @@ interface UserSearchAndFilterProps {
     name: string;
     value: string;
   }
+
+  export type TSortConfiguration = {sortBy: string;sortOrder: "asc" | "desc";} | undefined;

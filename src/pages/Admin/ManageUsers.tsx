@@ -8,11 +8,13 @@ import Container from "@/components/Shared/Container";
 import { TQueryParam } from "@/types";
 import { debounce } from "@/utils/debounce";
 import { CustomPagination } from "@/components/CustomPagination";
+import { TSortConfiguration } from "./types";
 
 export function ManageUsers() {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortConfig, setSortConfig] = useState<TSortConfiguration>(undefined);
 
   const {
     data: usersData,
@@ -21,7 +23,8 @@ export function ManageUsers() {
   } = useGetAllUsersQuery([
     { name: "page", value: page },
     { name: "limit", value: 3 },
-    { name: "sort", value: "id" },
+    // { name: sortConfig?.sortBy, value: sortConfig?.sortBy },
+    // { name: sortConfig?.sortOrder, value: sortConfig?.sortOrder },
     ...params,
   ]);
 
@@ -39,11 +42,14 @@ export function ManageUsers() {
     []
   );
 
-  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    debouncedSearchTerm(value);
-  }, [debouncedSearchTerm]);
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+      debouncedSearchTerm(value);
+    },
+    [debouncedSearchTerm]
+  );
 
   const handleFilterChange = useCallback((name: string, value: string) => {
     setParams((prev) =>
@@ -57,7 +63,7 @@ export function ManageUsers() {
     setSearchTerm("");
     setParams([]);
   }, []);
-
+  // console.log(sortConfig);
   return (
     <Container className="space-y-4">
       <div className="flex justify-between">
@@ -73,8 +79,14 @@ export function ManageUsers() {
         users={usersData?.data}
         isLoading={isLoading}
         isError={isError}
+        // sortConfig={{ key: "id", direction: "asc" }}
+        setSortConfig={setSortConfig}
       />
-      <CustomPagination totalPageCount={usersData?.meta?.total} activePage={usersData?.meta?.page} onPageSelect={setPage} />
+      <CustomPagination
+        totalPageCount={usersData?.meta?.total}
+        activePage={usersData?.meta?.page}
+        onPageSelect={setPage}
+      />
     </Container>
   );
 }

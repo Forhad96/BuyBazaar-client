@@ -20,11 +20,11 @@ import {
     onPageSelect,
   }: CustomPaginationProps) {
 
-    console.log(totalPageCount);
+    // console.log(totalPageCount);
     // Generate an array of page numbers dynamically with ellipsis logic
     const generatePageNumbers = (): (number | string)[] => {
       const pageNumbers: (number | string)[] = [];
-      const maxVisiblePages = 5;
+      const maxVisiblePages = 4;
   
       if (totalPageCount <= maxVisiblePages) {
         for (let page = 1; page <= totalPageCount; page++) {
